@@ -41,5 +41,7 @@ vagrant up  # Could take a long time
 
 ### Converting to VDI
 
+It may be desirable to shrink the main VM disk, expecially after installing OpenSpeedShop. To shrink the disk, one must first convert the VMDK file for the VM into a VDI file.
+
 
 

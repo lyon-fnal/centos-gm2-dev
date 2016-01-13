@@ -1,0 +1,15 @@
+#!/bin/bash
+#
+# Capture environment to env_out file -- we assume the container only has one of these
+# 
+# Restore with restore_env
+#
+REPO=.
+
+# Bash functions do not change
+declare -f >& $REPO/bash_funcs
+
+env | egrep -v '^HOSTNAME=' > $REPO/env_out
+
+echo "Wrote environment to $REPO/bash_funcs and $REPO/env_out"
+

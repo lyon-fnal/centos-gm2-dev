@@ -2,11 +2,13 @@
 
 This repository has a Vagrantfile and auxillary files for building a Centos 6.7 (equivalent to SLF6) Virtual Machine suitable for development of Muon g-2 offline code. 
 
+The idea is to have a virtual machine with a run-time environment similar to that of Grid jobs along with a partial development environment. You could do your code editing with the included Emacs editor, or, with VirtualBox's folder sharing, use a IDE on your host system (Windows or Mac). With Eclipse on the Mac, I have been able to develop and build code within the VM. A debugger (gdb) and several profilers (see below) are included in the installation as well. 
+
 ## Features
 
 Installed with this VM are:
 
-* CVMFS with `/cvmfs/gm2.opensciencegrid.org` configured
+* CVMFS with `/cvmfs/gm2.opensciencegrid.org` configured and ready to go
 * emacs editor
 * GNU screen
 * Minimal X-windows (you can pop a window to your ssh host)
@@ -18,9 +20,11 @@ Installed with this VM are:
 
 Also included are installers for two profilers: `igprof` and `OpenSpeedShop`
 
-This VM is meant to go on a Mac. It shares the host machines `/Users` directory. 
+The VM configuration assumes you have a Mac as the host as it shares your `/Users` directory with the VM. It ought to work fine on Windows too, but you will need to alter the `Vagrantfile` and change the folder sharing (easy). 
 
 ## Main Installation
+
+Note that the installation requires a large amount of downloads. Be sure to have a fast internet connection. 
 
 Download and install VirtualBox from http://www.virtualbox.org/
 Download and install Vagrant from https://www.vagrantup.com/downloads.html
@@ -64,6 +68,8 @@ You may now provision the VM
 
 ### Provision the VM
 
+Provisioning means to install and configure stuff in the VM to make it usable for what you want to do. 
+
 Bring up the VM with full provisioning (it may take many minutes to run)
 ```
 vagrant up
@@ -75,12 +81,14 @@ The virtual machine is now ready. Do `vagrant ssh` to log in.
 
 There are two profilers that you may want to install in your VM. `igprof` is the profiler that CMS uses. See http://igprof.org/ . `OpenSpeedShop` is a profiler designed for high performance computing, but it runs well on laptops. It comes with a GUI interface. See https://openspeedshop.org/ . You can also use `valgrind` (already installed). 
 
-Installing these packages is easy. `vagrant ssh` into the VM and go to the `~/moreInstalls` directory. Installing both, you would do
+Installing these packages is easy and mostly automated (but take a long time to run). `vagrant ssh` into the VM and go to the `~/moreInstalls` directory. Installing both, you would do
 
 ```
 sudo ./install-igprof.sh
 sudo ./install-openspeedshop.sh # Takes a VERY long time 
 ```
+
+Once this is done, you may delete the `~/moreInstalls` directory. 
 
 
 

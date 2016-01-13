@@ -9,7 +9,7 @@ REPO=.
 # Bash functions do not change
 declare -f >& $REPO/bash_funcs
 
-env | egrep -v '^HOSTNAME=' > $REPO/env_out
+env | egrep -v '^HOSTNAME=' | egrep -v '^BASH_FUNC' | egrep -v '^}$'  > $REPO/env_out
 
 echo "Wrote environment to $REPO/bash_funcs and $REPO/env_out"
 

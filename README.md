@@ -88,7 +88,9 @@ sudo ./install-igprof.sh
 sudo ./install-openspeedshop.sh # Takes a VERY long time 
 ```
 
-Once this is done, you may delete the `~/moreInstalls` directory. 
+Once this is done, you may delete the `~/moreInstalls` directory. Note that these installs (especially openspeedshop) will bloat your VM disk. If you converted the disk
+to VDI as per instructions above, you can compactify it by following instructions at http://superuser.com/questions/529149/how-to-compact-virtualboxs-vdi-file-size (`zerofree` is
+installed, so you should use it). 
 
 
 

@@ -27,6 +27,10 @@ ln -sf /usr/lib64/libX11.so.6.3.0 /usr/lib64/libX11.so
 ln -sf /usr/lib64/libXext.so.6.4.0 /usr/lib64/libXext.so
 ln -sf /usr/lib64/libXmu.so.6.2.0 /usr/lib64/libXmu.so
 
+echo '..Install Kerberos..'
+yum -y install krb5-workstation
+wget http://computing.fnal.gov/authentication/krb5conf/Linux/krb5.conf -O /etc/krb5.conf
+
 echo '..Install CVMFS..'
 yum -y install yum-plugin-priorities
 rpm -Uvh https://repo.grid.iu.edu/osg/3.3/osg-3.3-el6-release-latest.rpm

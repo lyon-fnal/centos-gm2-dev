@@ -29,9 +29,7 @@ Note that the installation requires a large amount of downloads. Be sure to have
 Download and install VirtualBox from http://www.virtualbox.org/
 Download and install Vagrant from https://www.vagrantup.com/downloads.html
 
-Clone this repository to a directory and cd to it. 
-
-Install the `vagrant-guest` plugin (keeps the VirtualBox Guest Additions up to date on the VM)
+Install the `vagrant-guest` plugin (keeps the VirtualBox Guest Additions up to date on the VM). From your terminal...
 ```
 vagrant plugin install vagrant-vbguest
 ```

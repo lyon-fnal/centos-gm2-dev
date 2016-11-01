@@ -29,7 +29,7 @@ Note that the installation requires a large amount of downloads. Be sure to have
 Download and install VirtualBox from http://www.virtualbox.org/
 Download and install Vagrant from https://www.vagrantup.com/downloads.html  -- but see below.
 
-**NOTE** Vagrant v1.8.5 has a known bug that completely breaks Vagrant for the Mac (it will get stuck with repeating warnings `default: Warning: Authentication failure. Retrying...` ). Until v1.8.6 is out, please use the older version v1.8.4. Use this link to download: https://releases.hashicorp.com/vagrant/1.8.4/vagrant_1.8.4.dmg
+[Note that the latest version of Vagrant 1.8.6 works fine. The previous version, 1.8.5, had serious problems. Be sure to download and use the lastest version.]
 
 Install the `vagrant-guest` plugin (keeps the VirtualBox Guest Additions up to date on the VM). From your terminal...
 ```

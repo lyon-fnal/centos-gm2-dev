@@ -27,8 +27,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   config.vm.provider "virtualbox" do |vb|
     # Customize the amount of memory on the VM:
-    vb.memory = 1024 * 4
     vb.cpus = 4
+    vb.memory = 1024 * 4 * 2  # Memory is 2 GB per CPU
+    vb.customize ["modifyvm", :id, "--vram", "128", "--accelerate3d", "on"]
+    config.vm.network "forwarded_port", guest: 19999, host: 19999, host_ip: "127.0.0.1" 
   end
   #
   # View the documentation for the provider you are using for more
@@ -39,6 +41,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # documentation for more information about their specific syntax and use.
   config.vm.provision "file", source: "./toCopyToVM/bin", destination: "bin"
   config.vm.provision "file", source: "./toCopyToVM/moreInstalls", destination: "moreInstalls"
+  config.vm.provision "file", source: "./toCopyToVM/slf.repo", destination: "slf.repo"
   config.vm.provision "shell", path: "bootstrap.sh"
 
   config.vbguest.auto_update = true

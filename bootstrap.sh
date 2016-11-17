@@ -14,6 +14,7 @@ yum -y install redhat-lsb-core
 
 echo '..Install some developer tools..'
 yum -y install emacs screen git expat-devel perl gcc glibc-devel gdb freetype-devel mesa-libGL-devel mesa-libGLU-devel meld valgrind
+yum -y install openssl-devel tar zip xz bzip2 patch wget which sudo strace
 
 yum -y install kernel-devel
 
@@ -30,6 +31,23 @@ ln -sf /usr/lib64/libXmu.so.6.2.0 /usr/lib64/libXmu.so
 echo '..Install Kerberos..'
 yum -y install krb5-workstation
 wget http://computing.fnal.gov/authentication/krb5conf/Linux/krb5.conf -O /etc/krb5.conf
+
+cp /home/vagrant/slf.repo /etc/yum.repos.d/slf.repo
+wget http://ftp.scientificlinux.org/linux/fermi/slf6.7/x86_64/os/RPM-GPG-KEY-sl
+rpm --import RPM-GPG-KEY-sl
+rm -f RPM-GPG-KEY-sl
+yum install -y krb5-fermi-getcert --enablerepo=slf
+yum install -y cigetcert --enablerepo=slf-security 
+
+echo '..Install netdata..'
+yum -y install zlib-devel libuuid-devel libmnl-devel gcc make git autoconf \
+               autoconf-archive autogen automake pkgconfig curl jq nodejs 
+git clone https://github.com/firehol/netdata.git --depth=1 
+cd netdata
+./netdata-installer.sh --dont-wait --dont-start-it
+echo 'art: gm2* nova* art* uboone*' >> /etc/netdata/apps_groups.conf
+cd .. 
+rm -rf ./netdata
 
 echo '..Install CVMFS..'
 yum -y install yum-plugin-priorities
@@ -55,10 +73,8 @@ CVMFS_CACHE_BASE=/var/cache/cvmfs
 EOF
 
 # Add zerofree (needed to compact VDI disk)
-wget ftp://fr2.rpmfind.net/linux/epel/5/x86_64/zerofree-1.0.1-5.el5.x86_64.rpm
-sudo rpm -ivh zerofree-1.0.1-5.el5.x86_64.rpm
-rm -f zerofree-1.0.1-5.el5.x86_64.rpm
+yum -y install zerofree
 
-
+yum clean all
 
 echo '...PROVISIONING COMPLETE - Run more setups in $HOME/moreInstalls'

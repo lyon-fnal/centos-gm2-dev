@@ -4,6 +4,11 @@ This repository has a Vagrantfile and auxillary files for building a Centos 6.7 
 
 The idea is to have a virtual machine with a run-time environment similar to that of Grid jobs along with a partial development environment. You could do your code editing with the included Emacs editor, or, with VirtualBox's folder sharing, use a IDE on your host system (Windows or Mac). With Eclipse on the Mac, I have been able to develop and build code within the VM. A debugger (gdb) and several profilers (see below) are included in the installation as well. 
 
+## Terminology
+
+The "host" is your metal machine (e.g. your laptop) running your host OS (e.g. MacOS). The `guest` is the virtual machine running SLF6. 
+`VirtualBox` is a free product from Oracle that allows you to run Virtual Machines. `Vagrant` is a configuration manager that makes setting up VirtualBox easier. 
+
 ## Features
 
 Installed with this VM are:
@@ -17,6 +22,7 @@ Installed with this VM are:
 * git
 * meld (graphical diff)
 * valgrind
+* netdata (for monitoring resource usage of the VM)
 
 Also included are installers for two profilers: `igprof` and `OpenSpeedShop`
 
@@ -29,9 +35,9 @@ Note that the installation requires a large amount of downloads. Be sure to have
 Download and install VirtualBox from http://www.virtualbox.org/
 Download and install Vagrant from https://www.vagrantup.com/downloads.html  -- but see below.
 
-[Note that the latest version of Vagrant 1.8.6 works fine. The previous version, 1.8.5, had serious problems. Be sure to download and use the lastest version.]
+[Note that the latest version of Vagrant 1.8.6 and beyond works fine. The previous version, 1.8.5, had serious problems. Be sure to download and use the lastest version.]
 
-Install the `vagrant-guest` plugin (keeps the VirtualBox Guest Additions up to date on the VM). From your terminal...
+Install the `vagrant-guest` plugin (keeps the VirtualBox Guest Additions up to date on the VM -- you need this to access your host disk). From your terminal...
 ```
 vagrant plugin install vagrant-vbguest
 ```
@@ -41,6 +47,20 @@ Clone or download this repository
 git clone https://github.com/lyon-fnal/centos-gm2-dev.git
 cd centos-gm2-dev
 ```
+
+Check the `Vagrantfile` by editing it in your favorite editor. In particular, look for the lines,
+```
+  config.vm.provider "virtualbox" do |vb|
+    # Customize the amount of memory on the VM:
+    vb.memory = 1024 * 4
+    vb.cpus = 4
+  end
+```
+and set the number of CPUs and memory size accordingly. The recommended memory size is 1 GB per CPU, though you could do 2 GB per CPU. Be sure to leave about half of your total machine memory for your host. 
+
+### Create the base VM
+
+
 
 ### Convert disk
 If you would like to keep your VM disk small, you should convert it to a VDI format. This format is compactable by VirtualBox commands. The default format of VMDK is not. Here are instructions to convert (skip to "Provision the VM" if you don't want to do this). 

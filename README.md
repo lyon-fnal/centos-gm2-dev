@@ -49,42 +49,31 @@ cd centos-gm2-dev
 ```
 
 Check the `Vagrantfile` by editing it in your favorite editor. In particular, look for the lines,
+
 ```
   config.vm.provider "virtualbox" do |vb|
     # Customize the amount of memory on the VM:
-    vb.memory = 1024 * 4
+    vb.memory = 1024 * 4 * 2
     vb.cpus = 4
-  end
 ```
-and set the number of CPUs and memory size accordingly. The recommended memory size is 1 GB per CPU, though you could do 2 GB per CPU. Be sure to leave about half of your total machine memory for your host. 
+and set the number of CPUs and memory size accordingly. I like 2 GB per CPU, but if you don't have much memory on your host, then you could do with 1 GB per CPU. Be sure you leave about half of your total memory for your host. 
 
-### Create the base VM
+### Troubleshooting
 
-
-
-### Convert disk
-If you would like to keep your VM disk small, you should convert it to a VDI format. This format is compactable by VirtualBox commands. The default format of VMDK is not. Here are instructions to convert (skip to "Provision the VM" if you don't want to do this). 
+If you try a `vagrant up` command (see below) and you get an error like the following (in red)...
 
 ```
-vagrant up --no-provision  # Create the bare VM
-vagrant halt               # Shut it down
+The box 'box-cutter/centos68' could not be found or...
 ```
 
-Start up your VirtualBox App (the GUI). Locate your new VM (called `centos-gm2-dev-XXXX` where `XXXX` is more stuff). Click on settings, click on storage. You may need to click on the controller to reveal the `VMDK` file. Right click on the path and select Copy. Now, in your host machine's terminal (e.g. on your Mac) cd to that directory (you may need to surround it in quotes if there are spaces in it). Now do,
-
+Then do the following on your Mac
 ```
-VBoxManage clonehd --format vdi centos67-disk1.vmdk centos67-disk1.vdi   # Make sure the names match your files
-```
-
-Go back to the VirtualBox GUI and the storage panel. Right click on the VMDK file and select "Remove Attachment". Now click on the plus and add the VDI disk you just made.
-
-You can delete the old disk with
-
-```
-VBoxManage closemedium disk centos67-disk1.vmdk --delete
+sudo mv /opt/vagrant/embedded/bin/curl  /opt/vagrant/embedded/bin/curl_
 ```
 
-You may now provision the VM
+The latest version of VirtualBox (1.8.7) seems to have shipped with a bad version of `curl`. Doing the above will make it use the system `curl` command. 
+
+Try the `vagrant up` (or variant) command again. 
 
 ### Provision the VM
 
@@ -111,6 +100,33 @@ sudo ./install-openspeedshop.sh # Takes a VERY long time
 Once this is done, you may delete the `~/moreInstalls` directory. Note that these installs (especially openspeedshop) will bloat your VM disk. If you converted the disk
 to VDI as per instructions above, you can compactify it by following instructions at http://superuser.com/questions/529149/how-to-compact-virtualboxs-vdi-file-size (`zerofree` is
 installed, so you should use it). 
+
+## Convert disk
+[Only if you know what you are doing]
+
+If you would like to keep your VM disk small, you should convert it to a VDI format. This format is compactable by VirtualBox commands. The default format of VMDK is not. Here are instructions to convert (skip to "Provision the VM" if you don't want to do this). 
+
+```
+vagrant up --no-provision  # Create the bare VM
+vagrant halt               # Shut it down
+```
+
+Start up your VirtualBox App (the GUI). Locate your new VM (called `centos-gm2-dev-XXXX` where `XXXX` is more stuff). Click on settings, click on storage. You may need to click on the controller to reveal the `VMDK` file. Right click on the "location" under "Information" and select Copy. Now, in your host machine's terminal (e.g. on your Mac) cd to that directory (you may need to surround it in quotes if there are spaces in it). Now do,
+
+```
+VBoxManage clonehd --format vdi centos68-disk1.vmdk centos68-disk1.vdi   # Make sure the names match your files
+```
+
+Go back to the VirtualBox GUI and the storage panel. Right click on the VMDK file and select "Remove Attachment". Now click on the plus and add the VDI disk you just made. Finally, click the "OK" button (you must click on "OK"). 
+
+You can delete the old disk with
+
+```
+VBoxManage closemedium disk centos68-disk1.vmdk --delete
+```
+
+You may now provision the VM
+
 
 
 

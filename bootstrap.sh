@@ -28,6 +28,8 @@ ln -sf /usr/lib64/libX11.so.6.3.0 /usr/lib64/libX11.so
 ln -sf /usr/lib64/libXext.so.6.4.0 /usr/lib64/libXext.so
 ln -sf /usr/lib64/libXmu.so.6.2.0 /usr/lib64/libXmu.so
 
+yum -y install libXt-devel
+
 echo '..Install Kerberos..'
 yum -y install krb5-workstation
 wget http://computing.fnal.gov/authentication/krb5conf/Linux/krb5.conf -O /etc/krb5.conf
@@ -76,5 +78,24 @@ EOF
 yum -y install zerofree
 
 yum clean all
+
+# Let's get tmux and friends
+wget https://github.com/libevent/libevent/releases/download/release-2.0.22-stable/libevent-2.0.22-stable.tar.gz
+tar xvf libevent-2.0.22-stable.tar.gz
+cd libevent-2.0.22-stable
+./configure
+make
+make install
+cd ..
+rm -rf libevent* 
+
+wget https://github.com/tmux/tmux/releases/download/2.3/tmux-2.3.tar.gz
+tar xvf tmux-2.3.tar.gz
+cd tmux-2.3
+./configure
+make
+make install
+cd ..
+rm -rf tmux*
 
 echo '...PROVISIONING COMPLETE - Run more setups in $HOME/moreInstalls'

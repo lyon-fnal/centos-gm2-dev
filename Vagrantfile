@@ -30,6 +30,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     vb.cpus = 4
     vb.memory = 1024 * 4 * 2  # Memory is 2 GB per CPU
     vb.customize ["modifyvm", :id, "--vram", "128", "--accelerate3d", "on"]
+    vb.customize [ "guestproperty", "set", :id, "/VirtualBox/GuestAdd/VBoxService/--timesync-set-threshold", 10000 ]
     config.vm.network "forwarded_port", guest: 19999, host: 19999, host_ip: "127.0.0.1", auto_correct: true
   end
   #

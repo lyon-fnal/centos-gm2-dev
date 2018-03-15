@@ -240,15 +240,13 @@ scp fred@gm2gpvm04.fnal.gov:/pnfs/GM2/scratch/users/fred/myDir/myFavoriteDataFil
    ```bash
    # Only do this once in the life of the VM
    sudo chown vagrant /pnfs ; sudo chgrp vagrant /pnfs
-   
    ```
    
    Then you can mount `/pnfs` with...
    
     ```
     kinit fred@FNAL.GOV
-    sudo sshfs fred@gm2gpvm04.fnal.gov:/pnfs /pnfs -o allow_other
-    
+    sudo sshfs fred@gm2gpvm04.fnal.gov:/pnfs /pnfs -o allow_other  
    ```
   
   You can then access files directly from your VM's `/pnfs/GM2/...`. 
@@ -257,7 +255,6 @@ scp fred@gm2gpvm04.fnal.gov:/pnfs/GM2/scratch/users/fred/myDir/myFavoriteDataFil
   
   ```
   sudo umount /pnfs
-  
   ```
   
   You will need to issue the `sshfs` command everytime you restart the VM. 

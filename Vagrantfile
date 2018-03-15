@@ -20,7 +20,7 @@ Vagrant.configure("2") do |config|
   config.vm.provider "virtualbox" do |vb|
     # Customize the amount of memory on the VM:
     vb.cpus = 4
-    vb.memory = 1024 * 4  # Memory is 2 GB per CPU
+    vb.memory = 1024 * 4 * 2  # Memory is 2 GB per CPU
 
     vb.customize ["modifyvm", :id, "--vram", "128", "--accelerate3d", "on", "--accelerate2dvideo", "on"]
     vb.customize [ "guestproperty", "set", :id, "/VirtualBox/GuestAdd/VBoxService/--timesync-set-threshold", 10000 ]

@@ -82,7 +82,7 @@ When it finishes, the virtual machine is now ready. Do `vagrant ssh` to log in.
 
 ## 4 Interacting with the VM
 
-To interact with your VM, you need to be in the directory that has the `VirtualBox` file mentioned above. The `vagrant` commands know what VM you mean by the directory you are in. 
+To interact with your VM, you need to be in the directory that has the `VagrantFile` file mentioned above. The `vagrant` commands know what VM you mean by the directory you are in. 
 
 ### 4.1 Starting and entering the VM
 

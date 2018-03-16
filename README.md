@@ -251,7 +251,7 @@ scp fred@gm2gpvm04.fnal.gov:/pnfs/GM2/scratch/users/fred/myDir/myFavoriteDataFil
   
   You can then access files directly from your VM's `/pnfs/GM2/...`. 
   
-  You an umount the remote volume with 
+  You can unmount the remote volume with 
   
   ```
   sudo umount /pnfs

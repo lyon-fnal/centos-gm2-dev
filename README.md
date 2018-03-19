@@ -96,9 +96,9 @@ it should EXACTLY match
 https://vagrantcloud.com/box-cutter/centos68
 ```
 
-If it doesn't match, then fix the file. Note that the file must **not** end with a new line or spurious spaces. 
+If it doesn't match, then fix the file. Note that the file must **not** end with a new line or spurious spaces. Then issue `vagrant up` again. 
 
-If things ae workking, it may take a long time to populate the VM with all of the software. 
+If things are workking, it may take a long time to populate the VM with all of the software. 
 
 When it finishes, the virtual machine is now ready. Do `vagrant ssh` to log in.
 

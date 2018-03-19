@@ -76,7 +76,29 @@ internal error that should be reported as a bug.
 ```
 Just issue `vagrant up` again. That error happens when the VM starts up before NFS was configured. 
 
-It may take a long time to populate the VM with all of the software. 
+You may also see an error like,
+```
+An error occurred while downloading the remote file. The error
+message, if any, is reproduced below. Please fix this error and try
+again.
+
+The requested URL returned error: 404 Not Found
+```
+
+If you see that, do
+```
+cat ~/.vagrant.d/boxes/box-cutter-VAGRANTSLASH-centos68/metadata_url
+```
+
+it should EXACTLY match
+
+```
+https://vagrantcloud.com/box-cutter/centos68
+```
+
+If it doesn't match, then fix the file. Note that the file must **not** end with a new line or spurious spaces. 
+
+If things ae workking, it may take a long time to populate the VM with all of the software. 
 
 When it finishes, the virtual machine is now ready. Do `vagrant ssh` to log in.
 

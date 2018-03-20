@@ -3,7 +3,7 @@
 Vagrant.configure("2") do |config|
 
   # The main OS box
-  config.vm.box = "bento/centos68"
+  config.vm.box = "bento/centos-6.8"
 
   # Create a private network, needed for nfs
   config.vm.network "private_network", type: "dhcp"

@@ -267,7 +267,7 @@ scp fred@gm2gpvm04.fnal.gov:/pnfs/GM2/scratch/users/fred/myDir/myFavoriteDataFil
    Then you can mount `/pnfs` with...
    
     ```
-    kinit fred@FNAL.GOV
+    sudo kinit fred@FNAL.GOV   # Note that you must run this with `sudo` to save your ticket in the right place
     sudo sshfs fred@gm2gpvm04.fnal.gov:/pnfs /pnfs -o allow_other  
    ```
   

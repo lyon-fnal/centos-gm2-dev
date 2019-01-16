@@ -51,10 +51,10 @@ Check the `Vagrantfile` by editing it in your favorite editor. In particular, lo
 ```
   config.vm.provider "virtualbox" do |vb|
     # Customize the amount of memory on the VM:
-    vb.cpus = 4
-    vb.memory = 1024 * 4 * 2
+    vb.cpus = 6   # I have a 6 core laptop
+    vb.memory = 1024 * 16  # 16 GB (half of my memory)
 ```
-and set the number of CPUs and memory size (in units of megabytes) according to your host machine. I give the VM half of my laptop's CPUs. I like 2 GB per CPU, but if you don't have much memory on your host, then you could do with 1 GB per CPU. You probably shouldn't allocate more than half of your host's total memory. 
+and set the number of CPUs and memory size (in units of megabytes) according to your host machine. I generally give the VM access to all of my machine's CPUs and half the memory. 
 
 ### 3.1 Provision the VM
 
@@ -69,34 +69,7 @@ vagrant up
 
 Note that you may need to give your host machine's administrative password because NFS needs to be set up for file sharing. 
 
-You may see an error like,
-```
-No guest IP was given to the Vagrant core NFS helper. This is an
-internal error that should be reported as a bug.
-```
-Just issue `vagrant up` again. That error happens when the VM starts up before NFS was configured. 
-
-You may also see an error like,
-```
-An error occurred while downloading the remote file. The error
-message, if any, is reproduced below. Please fix this error and try
-again.
-
-The requested URL returned error: 404 Not Found
-```
-
-If you see that, do
-```
-cat ~/.vagrant.d/boxes/box-cutter-VAGRANTSLASH-centos68/metadata_url
-```
-
-it should EXACTLY match
-
-```
-https://vagrantcloud.com/box-cutter/centos68
-```
-
-If it doesn't match, then fix the file. Note that the file must **not** end with a new line or spurious spaces. Then issue `vagrant up` again. 
+The process may stop on an error. I've found that issuing `vagrant up` again makes things work.
 
 If things are working, it may take a long time to populate the VM with all of the software. 
 
@@ -125,7 +98,7 @@ Note that you may need to give your host machine's administrative password becau
 You can then `ssh` into the VM with,
 
 ```bash
-vagrant ssh
+vagrant ssh  # See below for X-windows
 ```
 
 If for some reason you want to reboot the VM, you can do that with
@@ -147,7 +120,7 @@ There are many things you can do in the SLF6 Virtual Machine
 
 #### 4.2.1 CVMFS
 
-CVMFS is automounted. That means that when you first log into a fresh VM, doing `ls /cvmfs` will look empty. That's ok. You need to access a sub-directory first. Simply accessing `/cvmfs/gm2.opensciencegrid.org` in any way (`ls` or `source` a script inside) will mount the volume. You can mount any other CVMFS volume like `/cvmfs/fermilab.opensciencegrid.org` as well. 
+CVMFS is automounted. That means that when you first log into a fresh VM, doing `ls /cvmfs` will look empty. That's ok. You need to access a sub-directory first. Simply accessing `/cvmfs/gm2.opensciencegrid.org` (or any other Oasis or CERN CVMFS repository directory) in any way (`ls` or `source` a script inside) will mount the volume. You can mount any other CVMFS volume like `/cvmfs/fermilab.opensciencegrid.org` as well. 
 
 An easy way to start is 
 
@@ -179,7 +152,7 @@ The first thing you should do is to create a password for your VNC server (it ca
 vncpasswd
 ```
 
-You can start your vnc server with,
+You can start your vnc server with (you can add -autokill will exit VNC server when you log out of the VNC session),
 
 ```
 vncserver -geometry 1400x900
@@ -196,7 +169,7 @@ Note that the VNC server will out live your ssh terminal session. You should get
 You can even start the VNC server from your host directly with 
 
 ```
-vagrant ssh -- vncserver -geometry 1400x900
+vagrant ssh -- vncserver -geometry 1400x900 -autokill &
 ```
 
 Note that if you run `vncserver` on a Fermilab machine, you should **always** use the `-localhost` flag to restrict access to the VNC server. You do not need that here as VirtualBox will prevent outside access to your VNC server on the VM. 
@@ -301,4 +274,7 @@ The VM's file system lives in a file on your host machine. The more you write to
 
 ### 5.3 Use VNC 
 
-With VNC, you can make a nice GUI environment that is very responsive. Doing things out of your host's terminal program works too. See above for how to pop windows from there into the VNC screen. 
+With VNC, you can make a nice GUI environment that is very responsive. Doing things out of your host's terminal program works too. X-windows popped on your host tend to be slow, so prefer VNC. See above for how to pop windows from there into the VNC screen. 
+
+## 6.0 CLion
+

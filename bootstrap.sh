@@ -14,7 +14,7 @@ yum -y install epel-release redhat-lsb-core perl expat-devel glibc-devel gdb tim
 yum clean all
 
 echo '..Install some developer tools..'
-yum -y install emacs screen gcc gdb meld valgrind ncurses-devel
+yum -y install emacs screen gcc gdb meld valgrind ncurses-devel perf
 yum clean all
 yum -y install openssl-devel tar zip xz bzip2 patch wget which sudo strace
 yum clean all

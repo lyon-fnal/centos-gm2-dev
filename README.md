@@ -172,7 +172,7 @@ You can even start the VNC server from your host directly with
 vagrant ssh -- vncserver -geometry 1400x900 -autokill &
 ```
 
-Note that the geometry is for a generic screen. You may need to play with it to get the VNC screen the right size. Setting the gometry option above seems to set the maximum geometry (use the System -> Preferences -> Display option within the VNC desktop to play further. Other good geometries may be `-geometry 2560x1600` (for a Mac Book Pro Retina display) and `-geometry 2560x1440` (for a Thunderbolt display). 
+Note that the geometry is for a generic screen. You may need to play with it to get the VNC screen the right size. Setting the gometry option above seems to set the maximum geometry in the VM (use the System -> Preferences -> Display option within the VNC desktop to adjust further). Other good geometries may be `-geometry 2560x1600` (for a Mac Book Pro Retina display) and `-geometry 2560x1440` (for a Thunderbolt display). Turning on Scaling in the VNC viewer will help as well. 
 
 Note that if you run `vncserver` on a Fermilab machine, you should **always** use the `-localhost` flag to restrict access to the VNC server. You do not need that here as VirtualBox will prevent outside access to your VNC server on the VM. 
 

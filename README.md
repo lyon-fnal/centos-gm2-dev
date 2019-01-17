@@ -280,3 +280,10 @@ With VNC, you can make a nice GUI environment that is very responsive. Doing thi
 
 ## 6.0 CLion
 
+CLion is an extremly useful and comprehensive C++ IDE. It is available at https://www.jetbrains.com/clion . Unfortunately, it costs real money to use, but you can try it for 30 days and they have free academic licenses if you have an `.edu` e-mail address. 
+
+The best way I've found to install CLion is to simply download their Linux tar file, unpack it in a directory on your host, and run it from there in the VM. If you install it under `/Users` (on your Mac), the VM will access it with NFS and it will be fast. You definitely should use VNC for the fastest GUI response. Using it by popping an X-Window on your host will likely be slow. 
+
+You can download from https://www.jetbrains.com/clion/download/#section=linux .
+
+More instructions to follow. 

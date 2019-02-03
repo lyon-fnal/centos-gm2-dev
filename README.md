@@ -169,10 +169,10 @@ Note that the VNC server will out live your ssh terminal session. You should get
 You can even start the VNC server from your host directly with 
 
 ```
-vagrant ssh -- vncserver -geometry 1400x900 -autokill &
+vagrant ssh -- vncserver -geometry 2880x1800 -autokill &
 ```
 
-Note that the geometry is for a generic screen. You may need to play with it to get the VNC screen the right size. Setting the gometry option above seems to set the maximum geometry in the VM (use the System -> Preferences -> Display option within the VNC desktop to adjust further). Other good geometries may be `-geometry 2560x1600` (for a Mac Book Pro Retina display) and `-geometry 2560x1440` (for a Thunderbolt display). Turning on Scaling in the VNC viewer will help as well. 
+Note that the geometry above is appropriate for a Mac laptop retina display. You may need to play with it to get the VNC screen the right size for you. Setting the gometry option above seems to set the maximum geometry in the VM (use the System -> Preferences -> Display option within the VM desktop to adjust further). Another good geometry may be`-geometry 2560x1440` (for a Thunderbolt display). Turning on Scaling in the VNC viewer will help as well. You can adjust things like font size from within the VM desktiop with System -> Preferences -> Appearance menu. 
 
 Note that if you run `vncserver` on a Fermilab machine, you should **always** use the `-localhost` flag to restrict access to the VNC server. You do not need that here as VirtualBox will prevent outside access to your VNC server on the VM. 
 
@@ -192,7 +192,7 @@ gnome-terminal &  # Pop a terminal in the VNC
 root # Run root
 ```
 
-Remember to kill the VNC server when you are done your session with `vncserver -kill :1`
+To stop the VNC session, click on "vagrant" at the top of the desktop and chose "Quit". If you used the `-autokill` option when you started the `vncserver`, then the server will automatically quit. If you didn't do that, then you can kill the VNC server when you are done your session with `vncserver -kill :1` .
 
 If you do not have a Mac, then do a Google search for VNC clients. Most should work with the server installed on the VM. 
 
@@ -258,7 +258,7 @@ scp fred@gm2gpvm04.fnal.gov:/pnfs/GM2/scratch/users/fred/myDir/myFavoriteDataFil
   
 #### 4.2.7 Monitoring VM performance with netdata
 
-The `netdata` monitoring system is installed and automatically runs in the VM. This is the same system we run in the control room to monitor the DAQ machines. On your host, open `localhost:19999` in your browser and you'll see the monitoring page. If you are running a `gm2` program, click on the "Applications" section and you'll see metrics for a group called `art`. With those metrics you can see memory, CPU, disk, and network usage for your art program execution. 
+The `netdata` monitoring system is installed, but is not started by default. You can start it with `sudo netdata`. `netdata` is the same system we run in the control room to monitor the DAQ machines. On your host, open `localhost:19999` in your browser and you'll see the monitoring page. If you are running a `gm2` program, click on the "Applications" section and you'll see metrics for a group called `art`. With those metrics you can see memory, CPU, disk, and network usage for your art program execution. 
   
 ## 5 Workflows tips
 
@@ -266,7 +266,7 @@ Here are some tips for using the virtual machine.
 
 ### 5.1 Use the host file system
 
-You should use the host file system as much as possible and avoid writing to `/home/vagrant`. 
+You should use the host file system as much as possible and avoid writing to `/home/vagrant`, which is in the VM's filesystem. 
 
 The VM's file system lives in a file on your host machine. The more you write to the VM's file system, the larger that file becomes. It will never shrink. To avoid it becoming huge, use a directory on your host machine like `/Users/fred/Development/whatever`.  Because that is served with NFS, access should be very fast. You can put g-2 code and executables there too. 
 
@@ -280,10 +280,46 @@ With VNC, you can make a nice GUI environment that is very responsive. Doing thi
 
 ## 6.0 CLion
 
-CLion is an extremly useful and comprehensive C++ IDE. It is available at https://www.jetbrains.com/clion . Unfortunately, it costs real money to use, but you can try it for 30 days and they have free academic licenses if you have an `.edu` e-mail address. 
+CLion is an extremly useful and comprehensive C++ IDE. It is available at https://www.jetbrains.com/clion . Unfortunately, it costs real money to use, but you can try it for 30 days and they have free academic licenses if you have an `.edu` e-mail address. There is an effort at Fermilab to make CLion generally available to Fermilab staff as well. 
 
 The best way I've found to install CLion is to simply download their Linux tar file, unpack it in a directory on your host, and run it from there in the VM. If you install it under `/Users` (on your Mac), the VM will access it with NFS and it will be fast. You definitely should use VNC for the fastest GUI response. Using it by popping an X-Window on your host will likely be slow. 
 
 You can download from https://www.jetbrains.com/clion/download/#section=linux .
 
-More instructions to follow. 
+### 6.1 CLion and art/studio
+
+It is possible to develop within the art ecosystem with CLion and in fact the environment you get will be very nice. Here are the steps I do to get going...
+
+Start the VM; start VNC; connect to VNC with a client; pop a terminal window on that desktop. Within that terminal, set up your art environment. I've been using the `studio` simpified build system, but many of the instructions here should work for developing in a full-blown `mrb` environment as well. 
+
+If you are going to be debugging (see below) then you'll need python3.6 to use the nice *pretty-printers* (python3.6 is installed in the VM, but is not the default python). To access that, the first thing you do in your terminal window is to issue the command,
+
+```bash
+scl enable rh-python36 bash
+```
+
+then set up your environment normally and then remove the `/cvmfs` python. See more info below for running the debugger. 
+
+Once your environment is set up, then start up CLion (e.g. `/path/to/CLion/bin/clion.sh &'). If you are starting it for the first time, it will ask you many configuration questions. 
+
+### 6.2 Preparing a CLion project with studio
+
+To use the `studio` build system...
+
+```bash
+cd somewhere   # a directory on your host is best
+source /cvmfs/gm2.opensciencegrid.org/prod/g-2/setup
+setup gm2 v9_15_00 -q prof  # or the latest or your choice
+setup studio
+studio project gm2 -n MyProject  # Replace MyProject accordingly
+cd MyProject
+source setup.sh
+setup cmake v3_10_1  # or appropriate version
+
+studio create-analyzer TestAnalyzer
+```
+
+Now start CLion with this command in the terminal window: `/path/to/CLion/bin/clion.sh &' .
+
+
+

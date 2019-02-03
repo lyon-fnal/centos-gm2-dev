@@ -15,7 +15,7 @@ Vagrant.configure("2") do |config|
 
   # For speed, we mount /Users with nfs
   config.vm.synced_folder "/Users", "/Users" , type: "nfs", map_uid: 502, map_gid: 20,  bsd__nfs_options: ['rw', 'no_subtree_check', 'all_squash', 'async']
-  
+
   config.vm.provider "virtualbox" do |vb|
     # Customize the amount of memory on the VM:
     vb.cpus = 6

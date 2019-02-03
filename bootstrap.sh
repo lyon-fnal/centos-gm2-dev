@@ -26,6 +26,9 @@ yum -y groupinstall "X Window System" "Desktop"
 yum -y groupinstall fonts
 yum -y install tigervnc-server xorg-x11-fonts-Type1
 
+## Get rh-python36 for CLion debugging
+yum -y install rh-python36
+
 echo '..Install Kerberos..'
 cp /home/vagrant/slf.repo /etc/yum.repos.d/slf.repo
 wget http://ftp.scientificlinux.org/linux/fermi/slf6.10/x86_64/os/RPM-GPG-KEY-sl

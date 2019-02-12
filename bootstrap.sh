@@ -14,7 +14,7 @@ yum -y install epel-release redhat-lsb-core perl expat-devel glibc-devel gdb tim
 yum clean all
 
 echo '..Install some developer tools..'
-yum -y install emacs screen gcc gdb meld valgrind ncurses-devel perf
+yum -y install emacs screen gcc gdb meld valgrind ncurses-devel perf htop libunwind-devel
 yum clean all
 yum -y install openssl-devel tar zip xz bzip2 patch wget which sudo strace
 yum clean all
@@ -27,6 +27,8 @@ yum -y groupinstall fonts
 yum -y install tigervnc-server xorg-x11-fonts-Type1
 
 ## Get rh-python36 for CLion debugging
+yum install centos-release-scl
+yum-config-manager --enable centos-sclo-rh-testing
 yum -y install rh-python36
 
 echo '..Install Kerberos..'

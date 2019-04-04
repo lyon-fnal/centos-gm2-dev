@@ -56,7 +56,7 @@ service autofs restart
 cat > /etc/cvmfs/default.local <<EOF
 CVMFS_REPOSITORIES="`echo $((echo oasis.opensciencegrid.org;echo cms.cern.ch;ls /cvmfs)|sort -u)|tr ' ' ,`"
 CVMFS_QUOTA_LIMIT=20000
-CVMFS_HTTP_PROXY="http://squid.example.com:3128"
+CVMFS_HTTP_PROXY=DIRECT
 EOF
 
 echo '..Install netdata..'

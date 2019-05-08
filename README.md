@@ -32,6 +32,8 @@ The VM configuration assumes you have a Mac as the host as it shares your `/User
 
 Note that the installation requires a large amount of downloads. Be sure to have a fast internet connection. 
 
+If you have problems, see section 7 below. 
+
 - Download and install VirtualBox from http://www.virtualbox.org/
 - Download and install Vagrant (flavor appropriate for your **host**) from https://www.vagrantup.com/downloads.html
 
@@ -80,6 +82,8 @@ When it finishes, the virtual machine is now ready. Do `vagrant ssh` to log in.
 To interact with your VM, you need to be in the directory that has the `VagrantFile` file mentioned above. The `vagrant` commands know what VM you mean by the directory you are in. 
 
 ### 4.1 Starting and entering the VM
+
+If you encounter problems, see section 7 below.
 
 If you have recently rebootted your machine, it is likely that your VM is not running. You can always check with 
 
@@ -321,5 +325,26 @@ studio create-analyzer TestAnalyzer
 
 Now start CLion with this command in the terminal window: `/path/to/CLion/bin/clion.sh &' .
 
+## 7 Problems
 
+This section has a list of problems that have been encountered with solutions. 
 
+## 7.1 `vagrant up` stops with failure
+
+We have seen an issue where the `vagrant up` command stops with a vague error message like,
+
+```
+The following SSH command responded with a non-zero exit status.
+Vagrant assumes that this means the command failed!
+
+/sbin/ifdown 'eth1'
+mv -f '/tmp/vagrant-network-entry-eth1-1557285375-0' '/etc/sysconfig/network-scripts/ifcfg-eth1'
+(test -f /etc/init.d/NetworkManager && /etc/init.d/NetworkManager restart) || ((systemctl | grep NetworkManager.service) && systemctl restart NetworkManager)
+/sbin/ifup 'eth1'
+
+Stdout from the command:
+
+Determining IP information for eth1... failed.
+```
+
+The problem is that VirtualBox's internal DHCP network is disabled (this network is apparently required by the Vagrant VM). Re-enable it by starting the VirtualBox application and selecting the menu `File -> Host Network Manager ...` That will bring up a dialog box listing Host networks. There should be one called `vboxnet0` and the check box next to `Enable` under `DHCP Server` should be checked (it's likely not checked if you are seeing this problem). Click the check box to enable and click `close`. You should then reload the VM with `vagrant reload`. 

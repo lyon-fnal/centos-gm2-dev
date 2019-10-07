@@ -1,3 +1,6 @@
+# NOTE:
+I no longer use `vagrant` and am not updating this repository.
+
 # centos-gm2-dev
 
 This repository has a Vagrantfile and auxillary files for building a Centos 6.10 (equivalent to SLF6) Virtual Machine suitable for development of Muon g-2 offline code. 

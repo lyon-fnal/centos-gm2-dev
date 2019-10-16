@@ -1,5 +1,5 @@
 # NOTE:
-I no longer use `vagrant` and am not updating this repository.
+I no longer use `vagrant` and am not updating this repository.  See lyon-fnal/devenv instead.
 
 # centos-gm2-dev
 
